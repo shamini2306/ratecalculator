@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "266f85ec-ccd8-4292-ae8d-c700ca61e84c",
+		"name": "POS Malaysia Rate Calculator API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36009702"
+	},
+	"item": [
+		{
+			"name": "Get Country List",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Postcode-state lookup API (TO)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"postCode\": \"58200\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://www-api.pos.com.my/api/getStateByPostcode",
+					"protocol": "https",
+					"host": [
+						"www-api",
+						"pos",
+						"com",
+						"my"
+					],
+					"path": [
+						"api",
+						"getStateByPostcode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Postcode-state lookup API (FROM)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"postCode\": \"58200\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://www-api.pos.com.my/api/getStateByPostcode",
+					"protocol": "https",
+					"host": [
+						"www-api",
+						"pos",
+						"com",
+						"my"
+					],
+					"path": [
+						"api",
+						"getStateByPostcode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rate calculation API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"// Test: response is an array",
+							"pm.test(\"Response is an array\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"array\");",
+							"    pm.expect(jsonData.length).to.be.above(0);",
+							"});",
+							"",
+							"// Take the first item",
+							"let item = jsonData[0];",
+							"",
+							"// Test: required fields exist",
+							"pm.test(\"First item has required fields\", function () {",
+							"    pm.expect(item).to.have.property(\"first\");",
+							"    pm.expect(item).to.have.property(\"next\");",
+							"    pm.expect(item).to.have.property(\"amount\");",
+							"    pm.expect(item).to.have.property(\"maxWeight\");",
+							"    pm.expect(item).to.have.property(\"totalAmount\");",
+							"    pm.expect(item).to.have.property(\"zone\");",
+							"    pm.expect(item).to.have.property(\"fuelCharge\");",
+							"    pm.expect(item).to.have.property(\"handlingCharge\");",
+							"    pm.expect(item).to.have.property(\"SST\");",
+							"    pm.expect(item).to.have.property(\"PosCoverage\");",
+							"    pm.expect(item).to.have.property(\"stateFrom\");",
+							"    pm.expect(item).to.have.property(\"stateTo\");",
+							"    pm.expect(item).to.have.property(\"Town\");",
+							"    pm.expect(item).to.have.property(\"ODA\");",
+							"    pm.expect(item).to.have.property(\"ODAPrice\");",
+							"    pm.expect(item).to.have.property(\"SLA\");",
+							"    pm.expect(item).to.have.property(\"isDomestic\");",
+							"    pm.expect(item).to.have.property(\"name\");",
+							"    pm.expect(item).to.have.property(\"estimateDelivery\");",
+							"});",
+							"",
+							"// Test: check data types of key fields",
+							"pm.test(\"Field types are correct\", function () {",
+							"    pm.expect(item.first).to.be.a(\"string\");",
+							"    pm.expect(item.next).to.be.a(\"string\");",
+							"    pm.expect(item.amount).to.be.a(\"string\");",
+							"    pm.expect(item.maxWeight).to.be.a(\"string\");",
+							"    pm.expect(item.totalAmount).to.be.a(\"string\");",
+							"    pm.expect(item.zone).to.be.a(\"string\");",
+							"    pm.expect(item.fuelCharge).to.be.a(\"string\");",
+							"    pm.expect(item.handlingCharge).to.be.a(\"string\");",
+							"    pm.expect(item.SST).to.be.a(\"string\");",
+							"    pm.expect(item.PosCoverage).to.be.a(\"string\");",
+							"    pm.expect(item.stateFrom).to.be.a(\"string\");",
+							"    pm.expect(item.stateTo).to.be.a(\"string\");",
+							"    pm.expect(item.Town).to.be.a(\"string\");",
+							"    pm.expect(item.ODA).to.be.a(\"string\");",
+							"    pm.expect(item.ODAPrice).to.be.a(\"string\");",
+							"    pm.expect(item.SLA).to.be.a(\"string\");",
+							"    pm.expect(item.isDomestic).to.be.a(\"boolean\");",
+							"    pm.expect(item.name).to.be.a(\"string\");",
+							"    pm.expect(item.estimateDelivery).to.be.a(\"string\");",
+							"});",
+							"",
+							"// Example: check specific values if needed",
+							"pm.test(\"Zone is 2\", function () {",
+							"    pm.expect(item.zone).to.eql(\"2\");",
+							"});",
+							"",
+							"pm.test(\"isDomestic is true\", function () {",
+							"    pm.expect(item.isDomestic).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"country\": \"Malaysia\",\n  \"postcodeFrom\": \"70594\",\n  \"postcodeTo\": \"58200\",\n  \"weight\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://www-api.pos.com.my/api/price",
+					"protocol": "https",
+					"host": [
+						"www-api",
+						"pos",
+						"com",
+						"my"
+					],
+					"path": [
+						"api",
+						"price"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
